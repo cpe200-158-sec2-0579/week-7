@@ -10,7 +10,7 @@ namespace twozerofoureight
     public class Model
     {
         protected ArrayList oList;
-
+        
         public Model()
         {
             oList = new ArrayList();
