@@ -12,10 +12,32 @@ namespace twozerofoureight
         protected int[,] board;
         protected Random rand;
         private int i = 2;
+        private bool finish = false;
         public int printScore()
         {
-            i += 2;
-            return i;
+            int sum = 0;
+            int[] range = Enumerable.Range(0, boardSize).ToArray();
+            foreach (int i in range)
+            {
+                foreach (int j in range)
+                {
+                    sum = sum + board[i, j];
+                }
+            }
+            return sum;
+        }
+        public bool isFinish()
+        {
+            int sum = 0;
+            int[] range = Enumerable.Range(0, boardSize).ToArray();
+            foreach (int i in range)
+            {
+                foreach (int j in range)
+                {
+                    if (board[i, j] > 0) sum++;
+                }
+            }
+            return sum == 16;
         }
 
 

@@ -12,25 +12,44 @@ namespace twozerofoureight
 {
     public partial class TwoZeroFourEightView : Form, View
     {
+        
         Model model;
         Controller controller;
+        TwoZeroFourEightScoreView boards;
         private int score = 4;
        
         public TwoZeroFourEightView()
         {   
             InitializeComponent();
+            boards = new TwoZeroFourEightScoreView();
             model = new TwoZeroFourEightModel();
             model.AttachObserver(this);
+            model.AttachObserver(this.boards);
             controller = new TwoZeroFourEightController();
             controller.AddModel(model);
             controller.ActionPerformed(TwoZeroFourEightController.LEFT);
         }
+        
 
         public void Notify(Model m)
         {
-            UpdateBoard(((TwoZeroFourEightModel) m).GetBoard());
-            Updatescore(((TwoZeroFourEightModel)m).printScore());
-
+            TwoZeroFourEightModel tmp = (TwoZeroFourEightModel)m;
+            Updatescore(tmp.printScore());
+            UpdateBoard(tmp.GetBoard());
+            if (tmp.isFinish())
+            {
+                this.Hide();
+                boards.Show();
+            }
+        }
+        private void CheckEnd(bool isEnd)
+        {
+            if (isEnd)
+            {
+                TwoZeroFourEightScoreView scoreView = new TwoZeroFourEightScoreView();
+                scoreView.Show();
+                this.Hide();
+            }
         }
         public void Updatescore(int i)
         {
